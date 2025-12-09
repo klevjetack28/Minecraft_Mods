@@ -1,0 +1,13 @@
+{
+  "itemGroup.hexpawutilities": "Example Mod Tab",
+  "block.hexpawutilities.example_block": "Example Block",
+  "item.hexpawutilities.example_item": "Example Item",
+
+  "hexpawutilities.configuration.title": "HexPaw Utilities Configs",
+  "hexpawutilities.configuration.section.hexpawutilities.common.toml": "HexPaw Utilities Configs",
+  "hexpawutilities.configuration.section.hexpawutilities.common.toml.title": "HexPaw Utilities Configs",
+  "hexpawutilities.configuration.items": "Item List",
+  "hexpawutilities.configuration.logDirtBlock": "Log Dirt Block",
+  "hexpawutilities.configuration.magicNumberIntroduction": "Magic Number Text",
+  "hexpawutilities.configuration.magicNumber": "Magic Number"
+}
