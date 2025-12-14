@@ -19,6 +19,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -33,6 +35,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.bus.api.SubscribeEvent;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(HexPawUtilities.MODID)
@@ -58,6 +61,8 @@ public class HexPawUtilities {
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
 
+    public static Player player;  
+
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public HexPawUtilities(IEventBus modEventBus, ModContainer modContainer) {
@@ -76,7 +81,7 @@ public class HexPawUtilities {
         // Note that this is necessary if and only if we want *this* class (HexPawUtilities) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
-
+        
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
@@ -100,8 +105,9 @@ public class HexPawUtilities {
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(HexPawBlocks.CAT_TREE);
-            event.accept(HexPawBlocks.EXAMPLE_BLOCK);
+//            Example blocks for sandbox tests.
+//            event.accept(HexPawBlocks.CAT_TREE);
+//            event.accept(HexPawBlocks.EXAMPLE_BLOCK);
         }
     }
 
@@ -110,5 +116,18 @@ public class HexPawUtilities {
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
+    }
+
+    @SubscribeEvent
+    public void onPlayerTick(PlayerTickEvent.Post event) {
+        Player player = event.getEntity();
+        if (player.level().isClientSide()) {
+            // Client-side logic (e.g., rendering, local input)
+        } else {
+            // Server-side logic (e.g., game rules, data changes)
+            if (player.experienceLevel > 10) {
+                // Player has enough XP
+            }
+        }
     }
 }
